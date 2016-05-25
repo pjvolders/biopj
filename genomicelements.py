@@ -77,14 +77,14 @@ class GenomicElementList:
     def sort(self):
         for strand in self.tree:
             for chrom in self.tree[strand]:
-                self.tree[strand][chrom].sort(key=lambda ge: ge.start, reverse=True)
+                self.tree[strand][chrom].sort(key=lambda ge: ge.start)
 
     def filter_overlapping(self, genom_elem):
         all_genom_elems = self.tree[genom_elem.strand][genom_elem.chrom]
         genom_elems = []
 
         for ge in all_genom_elems:
-            if ge <= genom_elem:
+            if ge >= genom_elem:
                 if ge == genom_elem:
                     genom_elems.append(ge)
                 else:
