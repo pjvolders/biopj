@@ -34,6 +34,15 @@ class Transcript(GenomicElement):
 
         self.cluster = ''
 
+    @property
+    def size(self):
+        if len(self.exons) > 1:
+            my_size = 0
+            for e in self.exons:
+                my_size += e.size
+            return my_size
+        return None
+
     def __str__(self):
         r_val = ''
         for e in self.exons:
@@ -55,8 +64,12 @@ class Exon(GenomicElement):
 
         self.transcript = transcript
 
+    @property
+    def size(self):
+        return self.end - self.start + 1
+
     def __str__(self):
-        return `self.start` + ' - ' + `self.end`
+        return self.start + ' - ' + self.end
 
 
 class GenomicElementList:

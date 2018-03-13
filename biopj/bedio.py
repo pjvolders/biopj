@@ -1,4 +1,4 @@
-import genomicelements
+from biopj import genomicelements
 
 
 class BedFile:
@@ -18,28 +18,27 @@ class BedFile:
             self.filename = file_something
             try:
                 self.file = open(file_something, 'r+')
-            except IOError, e:
+                self.mode_reading = True
+            except IOError as e:
                 if e.errno == 2:
                     self.file = open(file_something, 'w+')
+                    self.mode_reading = False
                 else:
                     raise e
 
-        elif type(file_something) is file:
+        elif hasattr(file_something, 'read'):
             self.file = file_something
+            self.mode_reading = True
         else:
             raise Exception("No filename or file object provided")
 
     def __iter__(self):
-        return self
-
-    def next(self):
-        line = self.file.readline()
-
-        if len(line.rstrip()) > 0:
-            return BedLine(line)
-
+        if self.mode_reading:
+            for line in self.file:
+                yield BedLine(line)
         else:
-            raise StopIteration
+            raise Exception("File not opened for reading")
+
 
     def write(self, something):
         """
@@ -62,8 +61,12 @@ class BedFile:
 class BedLine:
     """
     Line in a BED file. Can be converted to and from genomicelements.Transcript objects
+    :type blocks: list[BedBlock]
     """
-    def __init__(self, info):
+    
+    blocks = []
+
+    def __init__(self, info: object):
         """
         :param info: str or Transcript
         """
@@ -76,15 +79,14 @@ class BedLine:
 
     def fromTranscript(self, transcript):
         """
+        :type transcript: genomicelements.Transcript
         :param transcript: Transcript
         """
         self.chrom = transcript.chrom
-        self.chrom_start = transcript.start + 1
+        self.chrom_start = transcript.start - 1
         self.chrom_end = transcript.end
         self.strand = transcript.strand
         self.name = transcript.name
-
-        self.blocks = []
 
         # if these fields are absent, BedLine will not be complete
         if len(transcript.exons) > 0:
