@@ -5,6 +5,7 @@ import sys
 import argparse
 import requests, sys
 import json
+from tqdm import tqdm
 
 
 def get_seq(chrom, start, end, strand):
@@ -54,7 +55,7 @@ def main():
     # print(args.accumulate(args.integers))
 
     with open(args.input_file) as f:
-        for line in f:
+        for line in tqdm(f):
             cols = line.rstrip().split("\t")
             chrom, start, end, name, score, strand = cols[0:6]
             # print((chrom, start, end, name, score, strand))
