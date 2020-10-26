@@ -10,7 +10,8 @@ setup(name='biopj',
       entry_points={
             'console_scripts': [
                   'circ_seq = biopj.circ_seq:main',
-                  'reverse_complement = biopj.reverse_complement:main'
+                  'reverse_complement = biopj.reverse_complement:main',
+                  'translate = biopj.translate:main'
             ]
       },
       zip_safe=False)
