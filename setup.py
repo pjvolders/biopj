@@ -11,7 +11,8 @@ setup(name='biopj',
             'console_scripts': [
                   'circ_seq = biopj.circ_seq:main',
                   'reverse_complement = biopj.reverse_complement:main',
-                  'translate = biopj.translate:main'
+                  'translate = biopj.translate:main',
+                  'split_at_stop_codons = biopj.proteomics.split_at_stop_codons:main'
             ]
       },
       zip_safe=False)
