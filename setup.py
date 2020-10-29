@@ -12,7 +12,8 @@ setup(name='biopj',
                   'circ_seq = biopj.circ_seq:main',
                   'reverse_complement = biopj.reverse_complement:main',
                   'translate = biopj.translate:main',
-                  'split_at_stop_codons = biopj.proteomics.split_at_stop_codons:main'
+                  'split_at_stop_codons = biopj.proteomics.split_at_stop_codons:main',
+                  'get_allele_freqs = biopj.get_allele_freqs:main'
             ]
       },
       zip_safe=False)
