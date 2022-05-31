@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from biopj import relbed
-from biopj.bedio import BedFile
+from biopj.bedio import BedFile, BedLine
+
 
 class TestRelBEDParser(TestCase):
 
@@ -59,3 +60,15 @@ class TestRelBEDParser(TestCase):
         self.assertEqual(43578579, parsed_line_4.blocks[0].end)
         self.assertEqual(43602777, parsed_line_4.blocks[2].start)
         self.assertEqual(43602927, parsed_line_4.blocks[2].end)
+
+    def test_weird_case(self):
+        parser = relbed.RelBEDParser("assets/bed_problem_line.bed")
+        p_bl = BedLine("{}\t{}\t{}\t{}".format("NOVELT000630491", 2575, 3225, "NOVELT000630491_ORF_3"))
+        p_bl_parsed = parser.parse_line(p_bl)
+        p_bl = BedLine("{}\t{}\t{}\t{}".format("NOVELT000630491", 2575, 3225, "NOVELT000630491_ORF_3"))
+        p_bl_parsed = parser.parse_line(p_bl)
+        p_bl = BedLine("{}\t{}\t{}\t{}".format("NOVELT000630491", 2575, 3225, "NOVELT000630491_ORF_3"))
+        p_bl_parsed = parser.parse_line(p_bl)
+        self.assertEqual(p_bl_parsed.chrom, "chrX")
+
+

@@ -3,6 +3,7 @@
 # import modules used here
 from biopj import bedio
 from biopj.genomicelements import Transcript
+import copy
 
 
 class RelBEDParser(object):
@@ -77,7 +78,7 @@ class RelBEDParser(object):
                             break
 
             # get the blocks
-            abs_blocks = list(filter(lambda b: b.end >= abs_start and b.start <= abs_end, bed_line.blocks))
+            abs_blocks = list(filter(lambda b: b.end >= abs_start and b.start <= abs_end, copy.deepcopy(bed_line.blocks)))
             if len(abs_blocks) > 0:
                 abs_blocks[0].start = abs_start
                 abs_blocks[-1].end = abs_end
