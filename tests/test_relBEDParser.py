@@ -61,7 +61,8 @@ class TestRelBEDParser(TestCase):
         self.assertEqual(43602777, parsed_line_4.blocks[2].start)
         self.assertEqual(43602927, parsed_line_4.blocks[2].end)
 
-    def test_weird_case(self):
+    def test_multiple_occurrences_transcript(self):
+        # tests for a very specific bug that occurred when a transcript had multiple uccurences in the relBED
         parser = relbed.RelBEDParser("assets/bed_problem_line.bed")
         p_bl = BedLine("{}\t{}\t{}\t{}".format("NOVELT000630491", 2575, 3225, "NOVELT000630491_ORF_3"))
         p_bl_parsed = parser.parse_line(p_bl)
