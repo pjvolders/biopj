@@ -124,8 +124,8 @@ class BedLine:
                     self.strand = l[5]
 
                     if len(l) > 6:
-                        self.thick_start = int(l[6])
-                        self.thick_end = int(l[7])
+                        self.thick_start = int(l[6]) if l[6] != '.' else int(l[1])
+                        self.thick_end = int(l[7]) if l[6] != '.' else int(l[2])
 
                         if len(l) > 8:
                             self.item_rgb = l[8]
